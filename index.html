@@ -220,38 +220,30 @@ function runDart(id, url) {
 
 <!-- 1 -->
 <div class="section">
-<h2>1.Builder Pattern</h2>
+<h2>1.Sintaks Factory Constructor</h2>
 <ul>
   <li>
-    Pada program ini, class <b>ConfigBuilder</b> digunakan untuk menerapkan 
-    konsep <i>builder pattern</i> dalam pembuatan objek <b>Config</b>.
+    Pada program ini, <b>factory constructor</b> digunakan untuk membuat objek melalui method khusus yang mengembalikan instance dari class.
   </li>
 
   <li>
-    Method <b>host()</b> dan <b>port()</b> digunakan untuk mengatur nilai 
-    konfigurasi secara bertahap sebelum objek dibuat.
+    Class <b>MyClass</b> memiliki dua cara pembuatan objek, yaitu melalui generative constructor dan factory constructor.
   </li>
 
   <li>
-    Setiap method pada class <b>ConfigBuilder</b> mengembalikan nilai 
-    <b>this</b> sehingga method dapat dipanggil secara berantai 
-    (<i>method chaining</i>).
+    Factory constructor <b>create()</b> bertugas membuat dan mengembalikan objek <b>MyClass</b>.
   </li>
 
   <li>
-    Method <b>build()</b> digunakan untuk membuat dan mengembalikan objek 
-    <b>Config</b> setelah semua konfigurasi selesai diatur.
+    Penggunaan factory constructor memberikan fleksibilitas dalam proses pembuatan objek.
   </li>
 
   <li>
-    Pada fungsi <b>main()</b>, objek konfigurasi dibuat dengan cara 
-    memanggil method secara berurutan menggunakan konsep 
-    <i>builder pattern</i>.
+    Pada fungsi <b>main()</b>, program membuat dua objek menggunakan constructor yang berbeda.
   </li>
 
   <li>
-    Program kemudian menampilkan informasi host, port, dan pesan bahwa 
-    konfigurasi berhasil dibuat.
+    Program kemudian menampilkan pesan bahwa objek berhasil dibuat.
   </li>
 </ul>
 <h3>Kode Dart:</h3>
@@ -263,37 +255,29 @@ function runDart(id, url) {
 // Kelas : SI2A
 // ==========================================
 
-class Config {}
+class MyClass {
 
-class ConfigBuilder {
+  // Generative constructor
+  MyClass();
 
-  ConfigBuilder host(String h) {
-    print("Host : $h");
-    return this;
-  }
-
-  ConfigBuilder port(int p) {
-    print("Port : $p");
-    return this;
-  }
-
-  Config build() {
-    print("Config berhasil dibuat");
-    return Config();
+  // Factory constructor
+  factory MyClass.create() {
+    return MyClass();
   }
 }
 
 void main() {
 
-  ConfigBuilder()
-      .host('localhost')
-      .port(8080)
-      .build();
+  var obj1 = MyClass();
+  var obj2 = MyClass.create();
+
+  print('Objek 1 berhasil dibuat');
+  print('Objek 2 berhasil dibuat');
 }
 </code></pre>
 </div>
 <button class="button" 
-onclick="runDart('dart1','https://dartpad.dev/embed-inline.html?id=c250dc1f51163e7633a8bd4c3739cead&split=60&run=true')">
+onclick="runDart('dart1','https://dartpad.dev/embed-inline.html?id=9e03900a0d1c7aa5b89f99e714bdfb34&split=60&run=true')">
 Tampilkan DartPad 1
 </button>
 
