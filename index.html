@@ -843,3 +843,185 @@ Tampilkan DartPad 7
 style="display:none; width:100%; height:300px;">
 </iframe>
 </div>
+
+<!-- 8 -->
+<div class="section">
+<h2>8.Praktik 2 – Factory untuk Payment Methods</h2>
+<ul>
+  <li>
+    Pada program ini, factory constructor digunakan untuk membuat objek metode pembayaran berdasarkan jenis pembayaran yang dipilih.
+  </li>
+
+  <li>
+    Class <b>PaymentMethod</b> berperan sebagai class abstrak yang menjadi induk dari berbagai metode pembayaran.
+  </li>
+
+  <li>
+    Berdasarkan nilai parameter yang diberikan, factory constructor akan membuat objek <b>CreditCardPayment</b>, <b>PayPalPayment</b>, <b>BankTransferPayment</b>, atau <b>EWalletPayment</b>.
+  </li>
+
+  <li>
+    Teknik ini memungkinkan proses pembuatan objek dilakukan secara fleksibel tanpa perlu mengetahui class turunannya secara langsung.
+  </li>
+
+  <li>
+    Setiap subclass mengimplementasikan method <b>pay()</b> dengan cara pembayaran yang berbeda.
+  </li>
+
+  <li>
+    Program kemudian menampilkan informasi pembayaran sesuai metode pembayaran yang digunakan.
+  </li>
+</ul>
+<h3>Kode Dart:</h3>
+<div class="code-box">
+<pre><code>
+// ==========================================
+// Nama  : Yoza Ulpia Rafila
+// NIM   : 251410004
+// Kelas : SI2A
+// ==========================================
+
+abstract class PaymentMethod {
+  void pay(double amount);
+
+  factory PaymentMethod(String type) {
+    switch (type.toLowerCase()) {
+      case 'creditcard':
+        return CreditCardPayment();
+
+      case 'paypal':
+        return PayPalPayment();
+
+      case 'banktransfer':
+        return BankTransferPayment();
+
+      case 'ewallet':
+        return EWalletPayment();
+
+      default:
+        throw ArgumentError(
+            'Unknown payment method: $type');
+    }
+  }
+}
+
+class CreditCardPayment implements PaymentMethod {
+  @override
+  void pay(double amount) {
+    print('Paying $amount with Credit Card');
+  }
+}
+
+class PayPalPayment implements PaymentMethod {
+  @override
+  void pay(double amount) {
+    print('Paying $amount with PayPal');
+  }
+}
+
+class BankTransferPayment implements PaymentMethod {
+  @override
+  void pay(double amount) {
+    print('Paying $amount with Bank Transfer');
+  }
+}
+
+class EWalletPayment implements PaymentMethod {
+  @override
+  void pay(double amount) {
+    print('Paying $amount with E-Wallet');
+  }
+}
+
+void main() {
+  var creditCard = PaymentMethod('creditcard');
+  var paypal = PaymentMethod('paypal');
+  var bankTransfer = PaymentMethod('banktransfer');
+  var ewallet = PaymentMethod('ewallet');
+
+  creditCard.pay(100000);
+  paypal.pay(50000);
+  bankTransfer.pay(250000);
+  ewallet.pay(75000);
+}
+</code></pre>
+</div>
+<button class="button" 
+onclick="runDart('dart8','https://dartpad.dev/embed-inline.html?id=1fafe84ae428463a8b01cfde64f08cb9&split=60&run=true')">
+Tampilkan DartPad 8
+</button>
+
+<iframe id="dart8" 
+style="display:none; width:100%; height:300px;">
+</iframe>
+</div>
+
+<!-- 9 -->
+<div class="section">
+<h2>9.Praktik 2 – Factory untuk Payment Methods</h2>
+<ul>
+  <li>
+    Pada program ini ditunjukkan perbedaan antara <b>Factory Constructor</b> dan <b>Static Method</b> dalam membuat objek.
+  </li>
+
+  <li>
+    Class <b>Example</b> memiliki constructor privat yang hanya dapat diakses dari dalam class.
+  </li>
+
+  <li>
+    Factory constructor <b>create()</b> digunakan untuk membuat dan mengembalikan objek Example.
+  </li>
+
+  <li>
+    Static method <b>createStatic()</b> juga digunakan untuk membuat objek Example, tetapi merupakan metode statis biasa.
+  </li>
+
+  <li>
+    Factory constructor harus mengembalikan instance class atau subclass, sedangkan static method dapat mengembalikan tipe data apa saja.
+  </li>
+
+  <li>
+    Program kemudian membandingkan objek yang dibuat dan menampilkan hasilnya ke layar.
+  </li>
+</ul>
+<h3>Kode Dart:</h3>
+<div class="code-box">
+<pre><code>
+// ==========================================
+// Nama  : Yoza Ulpia Rafila
+// NIM   : 251410004
+// Kelas : SI2A
+// ==========================================
+
+class Example {
+  Example._();
+
+  // Factory Constructor
+  factory Example.create() => Example._();
+
+  // Static Method
+  static Example createStatic() => Example._();
+}
+
+void main() {
+  var e1 = Example.create();
+  var e2 = Example.createStatic();
+
+  print('e1 dibuat melalui konstruktor pabrik: $e1');
+  print('e2 dibuat melalui metode statis: $e2');
+
+  if (e1 != e2) {
+    print('e1 dan e2 adalah instansi yang berbeda, seperti yang diharapkan.');
+  }
+}
+</code></pre>
+</div>
+<button class="button" 
+onclick="runDart('dart9','https://dartpad.dev/embed-inline.html?id=a9f8fd069eb402e4662b97139edb21bb&split=60&run=true')">
+Tampilkan DartPad 9
+</button>
+
+<iframe id="dart9" 
+style="display:none; width:100%; height:300px;">
+</iframe>
+</div>
