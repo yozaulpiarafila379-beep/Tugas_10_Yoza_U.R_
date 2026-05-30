@@ -1121,3 +1121,191 @@ Tampilkan DartPad 10
 style="display:none; width:100%; height:300px;">
 </iframe>
 </div>
+
+<!-- 11 -->
+<div class="section">
+<h2>11.Latihan – ConnectionFactory, NotificationFactory, dan ShapeFactory</h2>
+<ul>
+  <li>
+    Program ini menggabungkan tiga latihan yaitu ConnectionFactory, NotificationFactory, dan ShapeFactory.
+  </li>
+
+  <li>
+    ConnectionFactory digunakan untuk mengelola koneksi database menggunakan konsep connection pooling.
+  </li>
+
+  <li>
+    NotificationFactory digunakan untuk memilih subclass notifikasi berdasarkan platform yang digunakan seperti Android, iOS, dan Web.
+  </li>
+
+  <li>
+    ShapeFactory menggunakan mekanisme cache untuk menyimpan dan menggunakan kembali objek shape yang sama.
+  </li>
+
+  <li>
+    Factory constructor memungkinkan pembuatan objek dilakukan secara fleksibel tanpa perlu mengetahui class turunannya secara langsung.
+  </li>
+
+  <li>
+    Program menampilkan penggunaan koneksi database, pengiriman notifikasi, dan penggunaan cache pada objek shape.
+  </li>
+</ul>
+<h3>Kode Dart:</h3>
+<div class="code-box">
+<pre><code>
+// ==========================================
+// Nama  : Yoza Ulpia Rafila
+// NIM   : 251410004
+// Kelas : SI2A
+// ==========================================
+
+// ================================
+// ConnectionFactory
+// ================================
+
+class DatabaseConnection {
+  final int id;
+
+  DatabaseConnection(this.id);
+
+  void connect() {
+    print('Menggunakan koneksi database #$id');
+  }
+}
+
+class ConnectionFactory {
+  static final List<DatabaseConnection> _pool = [];
+
+  static DatabaseConnection getConnection() {
+    if (_pool.isNotEmpty) {
+      return _pool.removeLast();
+    }
+
+    return DatabaseConnection(
+      DateTime.now().millisecondsSinceEpoch,
+    );
+  }
+
+  static void releaseConnection(
+      DatabaseConnection connection) {
+    _pool.add(connection);
+  }
+}
+
+// ================================
+// NotificationFactory
+// ================================
+
+abstract class NotificationService {
+  void send();
+
+  factory NotificationService(String platform) {
+    switch (platform.toLowerCase()) {
+      case 'android':
+        return AndroidNotification();
+
+      case 'ios':
+        return IOSNotification();
+
+      case 'web':
+        return WebNotification();
+
+      default:
+        throw ArgumentError('Platform tidak dikenal');
+    }
+  }
+}
+
+class AndroidNotification
+    implements NotificationService {
+  @override
+  void send() {
+    print('Mengirim notifikasi Android');
+  }
+}
+
+class IOSNotification
+    implements NotificationService {
+  @override
+  void send() {
+    print('Mengirim notifikasi iOS');
+  }
+}
+
+class WebNotification
+    implements NotificationService {
+  @override
+  void send() {
+    print('Mengirim notifikasi Web');
+  }
+}
+
+// ================================
+// ShapeFactory dengan Cache
+// ================================
+
+class Shape {
+  final String type;
+
+  Shape._(this.type);
+
+  static final Map<String, Shape> _cache = {};
+
+  factory Shape(String type) {
+    if (!_cache.containsKey(type)) {
+      _cache[type] = Shape._(type);
+    }
+
+    return _cache[type]!;
+  }
+
+  void draw() {
+    print('Drawing $type');
+  }
+}
+
+// ================================
+// Main Program
+// ================================
+
+void main() {
+  print('=== ConnectionFactory ===');
+
+  var conn1 = ConnectionFactory.getConnection();
+  conn1.connect();
+
+  ConnectionFactory.releaseConnection(conn1);
+
+  var conn2 = ConnectionFactory.getConnection();
+  conn2.connect();
+
+  print('\n=== NotificationFactory ===');
+
+  var android = NotificationService('android');
+  var ios = NotificationService('ios');
+  var web = NotificationService('web');
+
+  android.send();
+  ios.send();
+  web.send();
+
+  print('\n=== ShapeFactory ===');
+
+  var circle1 = Shape('circle');
+  var circle2 = Shape('circle');
+
+  circle1.draw();
+
+  print('Object sama: ${circle1 == circle2}');
+}
+</code></pre>
+</div>
+<button class="button" 
+onclick="runDart('dart11','https://dartpad.dev/embed-inline.html?id=51ec5397f82d2c28e3cd12fde6d0ad78&split=60&run=true')">
+Tampilkan DartPad 11
+</button>
+
+<iframe id="dart11" 
+style="display:none; width:100%; height:300px;">
+</iframe>
+</div>
