@@ -556,3 +556,102 @@ Tampilkan DartPad 4
 style="display:none; width:100%; height:300px;">
 </iframe>
 </div>
+
+<!-- 5 -->
+<div class="section">
+<h2>5.Praktik 1 – Factory untuk Configuration</h2>
+<ul>
+  <li>
+    Pada program ini, factory constructor digunakan untuk membuat objek konfigurasi berdasarkan environment yang dipilih.
+  </li>
+
+  <li>
+    Class <b>AppConfig</b> berfungsi untuk menyimpan konfigurasi aplikasi seperti environment, API URL, dan debug mode.
+  </li>
+
+  <li>
+    Berdasarkan parameter yang diberikan, factory constructor akan mengembalikan konfigurasi Development, Production, atau Staging.
+  </li>
+
+  <li>
+    Teknik ini memungkinkan pembuatan objek konfigurasi dilakukan secara terpusat tanpa perlu memanggil constructor tertentu secara langsung.
+  </li>
+
+  <li>
+    Setiap environment memiliki nilai konfigurasi yang berbeda sesuai kebutuhan pengembangan aplikasi.
+  </li>
+
+  <li>
+    Program kemudian menampilkan informasi konfigurasi yang digunakan berupa environment, API URL, dan debug mode.
+  </li>
+</ul>
+<h3>Kode Dart:</h3>
+<div class="code-box">
+<pre><code>
+// ==========================================
+// Nama  : Yoza Ulpia Rafila
+// NIM   : 251410004
+// Kelas : SI2A
+// ==========================================
+
+class AppConfig {
+  final String environment;
+  final String apiUrl;
+  final bool debugMode;
+
+  AppConfig._development()
+      : environment = 'development',
+        apiUrl = 'http://localhost:3000',
+        debugMode = true;
+
+  AppConfig._production()
+      : environment = 'production',
+        apiUrl = 'https://api.example.com',
+        debugMode = false;
+
+  AppConfig._staging()
+      : environment = 'staging',
+        apiUrl = 'https://staging.example.com',
+        debugMode = true;
+
+  factory AppConfig.fromEnvironment(String env) {
+    switch (env.toLowerCase()) {
+      case 'dev':
+        return AppConfig._development();
+      case 'prod':
+        return AppConfig._production();
+      case 'stage':
+        return AppConfig._staging();
+      default:
+        return AppConfig._development();
+    }
+  }
+
+  void printConfig() {
+    print('Environment : $environment');
+    print('API URL     : $apiUrl');
+    print('Debug Mode  : $debugMode');
+    print('------------------------');
+  }
+}
+
+void main() {
+  var dev = AppConfig.fromEnvironment('dev');
+  var prod = AppConfig.fromEnvironment('prod');
+  var stage = AppConfig.fromEnvironment('stage');
+
+  dev.printConfig();
+  prod.printConfig();
+  stage.printConfig();
+}
+</code></pre>
+</div>
+<button class="button" 
+onclick="runDart('dart5','https://dartpad.dev/embed-inline.html?id=3b2cd2c6d17ca402ec51f6f973d3d95e&split=60&run=true')">
+Tampilkan DartPad 5
+</button>
+
+<iframe id="dart5" 
+style="display:none; width:100%; height:300px;">
+</iframe>
+</div>
