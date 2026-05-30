@@ -1309,3 +1309,156 @@ Tampilkan DartPad 11
 style="display:none; width:100%; height:300px;">
 </iframe>
 </div>
+
+<!-- 12 -->
+<div class="section">
+<h2>12.Challenge – AnimalFactory</h2>
+<ul>
+  <li>
+    Pada program ini, factory constructor digunakan untuk membuat berbagai jenis objek hewan berdasarkan input pengguna.
+  </li>
+
+  <li>
+    Class <b>Animal</b> berperan sebagai class abstrak yang menjadi induk dari beberapa jenis hewan.
+  </li>
+
+  <li>
+    Berdasarkan parameter yang diberikan, factory constructor akan membuat objek <b>Cat</b>, <b>Dog</b>, atau <b>Bird</b>.
+  </li>
+
+  <li>
+    Program menerapkan cache sehingga objek hewan dengan atribut yang sama dapat digunakan kembali tanpa membuat objek baru.
+  </li>
+
+  <li>
+    Validasi dilakukan untuk memastikan nama hewan tidak kosong dan jenis hewan yang dimasukkan valid.
+  </li>
+
+  <li>
+    Program kemudian menampilkan suara masing-masing hewan dan membuktikan bahwa cache bekerja dengan membandingkan dua objek yang sama.
+  </li>
+</ul>
+<h3>Kode Dart:</h3>
+<div class="code-box">
+<pre><code>
+// ==========================================
+// Nama  : Yoza Ulpia Rafila
+// NIM   : 251410004
+// Kelas : SI2A
+// ==========================================
+
+abstract class Animal {
+  final String name;
+
+  Animal(this.name);
+
+  void sound();
+
+  static final Map<String, Animal> _cache = {};
+
+  factory Animal.create(
+    String type,
+    String name,
+  ) {
+    if (name.isEmpty) {
+      throw ArgumentError(
+          'Nama hewan tidak boleh kosong');
+    }
+
+    String key = '$type-$name';
+
+    if (_cache.containsKey(key)) {
+      return _cache[key]!;
+    }
+
+    Animal animal;
+
+    switch (type.toLowerCase()) {
+      case 'cat':
+        animal = Cat(name);
+        break;
+
+      case 'dog':
+        animal = Dog(name);
+        break;
+
+      case 'bird':
+        animal = Bird(name);
+        break;
+
+      default:
+        throw ArgumentError(
+            'Jenis hewan tidak dikenal');
+    }
+
+    _cache[key] = animal;
+
+    return animal;
+  }
+}
+
+class Cat extends Animal {
+  Cat(String name) : super(name);
+
+  @override
+  void sound() {
+    print('$name : Meow');
+  }
+}
+
+class Dog extends Animal {
+  Dog(String name) : super(name);
+
+  @override
+  void sound() {
+    print('$name : Woof');
+  }
+}
+
+class Bird extends Animal {
+  Bird(String name) : super(name);
+
+  @override
+  void sound() {
+    print('$name : Tweet');
+  }
+}
+
+void main() {
+  var cat1 = Animal.create(
+    'cat',
+    'Milo',
+  );
+
+  var dog1 = Animal.create(
+    'dog',
+    'Buddy',
+  );
+
+  var bird1 = Animal.create(
+    'bird',
+    'Rio',
+  );
+
+  var cat2 = Animal.create(
+    'cat',
+    'Milo',
+  );
+
+  cat1.sound();
+  dog1.sound();
+  bird1.sound();
+
+  print('Cache bekerja: ${cat1 == cat2}');
+}
+</code></pre>
+</div>
+<button class="button" 
+onclick="runDart('dart12','https://dartpad.dev/embed-inline.html?id=f18a3e07246701a7adbf95dc38f0e570&split=60&run=true')">
+Tampilkan DartPad 12
+</button>
+
+<iframe id="dart12" 
+style="display:none; width:100%; height:300px;">
+</iframe>
+</div>
