@@ -1025,3 +1025,99 @@ Tampilkan DartPad 9
 style="display:none; width:100%; height:300px;">
 </iframe>
 </div>
+
+<!-- 10 -->
+<div class="section">
+<h2>10.Factory untuk Immutable Objects dengan Cache</h2>
+<ul>
+  <li>
+    Pada program ini, factory constructor digunakan untuk membuat objek warna yang bersifat immutable dan disimpan dalam cache.
+  </li>
+
+  <li>
+    Class <b>Color</b> menyimpan nilai RGB yang tidak dapat diubah setelah objek dibuat.
+  </li>
+
+  <li>
+    Factory constructor <b>rgb()</b> akan memeriksa cache sebelum membuat objek baru.
+  </li>
+
+  <li>
+    Jika kombinasi warna yang sama sudah pernah dibuat, objek yang ada di cache akan digunakan kembali.
+  </li>
+
+  <li>
+    Teknik ini membantu menghemat penggunaan memori karena objek yang sama tidak dibuat berulang kali.
+  </li>
+
+  <li>
+    Program kemudian membuktikan bahwa dua objek dengan nilai RGB yang sama dapat merujuk pada instance yang sama.
+  </li>
+</ul>
+<h3>Kode Dart:</h3>
+<div class="code-box">
+<pre><code>
+// ==========================================
+// Nama  : Yoza Ulpia Rafila
+// NIM   : 251410004
+// Kelas : SI2A
+// ==========================================
+
+class Color {
+  final int red;
+  final int green;
+  final int blue;
+
+  static final Map<String, Color> _cache = {};
+
+  Color._(this.red, this.green, this.blue);
+
+  factory Color.rgb(int red, int green, int blue) {
+    if (red < 0 ||
+        red > 255 ||
+        green < 0 ||
+        green > 255 ||
+        blue < 0 ||
+        blue > 255) {
+      throw ArgumentError('RGB values must be 0-255');
+    }
+
+    var key = '$red,$green,$blue';
+
+    if (!_cache.containsKey(key)) {
+      _cache[key] = Color._(red, green, blue);
+    }
+
+    return _cache[key]!;
+  }
+
+  factory Color.red() => Color.rgb(255, 0, 0);
+  factory Color.green() => Color.rgb(0, 255, 0);
+  factory Color.blue() => Color.rgb(0, 0, 255);
+  factory Color.white() => Color.rgb(255, 255, 255);
+  factory Color.black() => Color.rgb(0, 0, 0);
+
+  @override
+  String toString() => 'Color($red, $green, $blue)';
+}
+
+void main() {
+  var red1 = Color.red();
+  var red2 = Color.rgb(255, 0, 0);
+
+  print(red1);
+  print(red2);
+
+  print(red1 == red2);
+}
+</code></pre>
+</div>
+<button class="button" 
+onclick="runDart('dart10','https://dartpad.dev/embed-inline.html?id=3fcdcdf0735a3f177df93ce44b4443e4&split=60&run=true')">
+Tampilkan DartPad 10
+</button>
+
+<iframe id="dart10" 
+style="display:none; width:100%; height:300px;">
+</iframe>
+</div>
