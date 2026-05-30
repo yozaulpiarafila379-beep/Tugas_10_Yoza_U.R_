@@ -457,3 +457,102 @@ Tampilkan DartPad 3
 style="display:none; width:100%; height:300px;">
 </iframe>
 </div>
+
+<!-- 4 -->
+<div class="section">
+<h2>4.Kasus 3 – Mengembalikan Subclass</h2>
+<ul>
+  <li>
+    Pada program ini, factory constructor digunakan untuk mengembalikan objek dari subclass yang berbeda.
+  </li>
+
+  <li>
+    Class <b>Shape</b> berperan sebagai class abstrak yang menjadi induk dari beberapa bentuk geometri.
+  </li>
+
+  <li>
+    Berdasarkan nilai parameter yang diberikan, factory constructor akan membuat objek <b>Circle</b>, <b>Square</b>, <b>Triangle</b>, atau <b>Rectangle</b>.
+  </li>
+
+  <li>
+    Teknik ini memungkinkan proses pembuatan objek dilakukan secara fleksibel tanpa perlu mengetahui class turunannya secara langsung.
+  </li>
+
+  <li>
+    Setiap subclass mengimplementasikan method <b>draw()</b> dengan perilaku yang berbeda.
+  </li>
+
+  <li>
+    Program kemudian menampilkan jenis objek yang sedang digambar sesuai subclass yang digunakan.
+  </li>
+</ul>
+<h3>Kode Dart:</h3>
+<div class="code-box">
+<pre><code>
+// ==========================================
+// Nama  : Yoza Ulpia Rafila
+// NIM   : 251410004
+// Kelas : SI2A
+// ==========================================
+
+abstract class Shape {
+  void draw();
+
+  factory Shape(String type) {
+    switch (type) {
+      case 'circle':
+        return Circle();
+      case 'square':
+        return Square();
+      case 'triangle':
+        return Triangle();
+      case 'rectangle':
+        return Rectangle();
+      default:
+        return Circle();
+    }
+  }
+}
+
+class Circle implements Shape {
+  @override
+  void draw() => print('Drawing circle');
+}
+
+class Square implements Shape {
+  @override
+  void draw() => print('Drawing square');
+}
+
+class Triangle implements Shape {
+  @override
+  void draw() => print('Drawing triangle');
+}
+
+class Rectangle implements Shape {
+  @override
+  void draw() => print('Drawing rectangle');
+}
+
+void main() {
+  var circle = Shape('circle');
+  var square = Shape('square');
+  var triangle = Shape('triangle');
+  var rectangle = Shape('rectangle');
+
+  circle.draw();
+  square.draw();
+  triangle.draw();
+  rectangle.draw();
+}
+</code></pre>
+</div>
+<button class="button" 
+onclick="runDart('dart4','https://dartpad.dev/embed-inline.html?id=2f7ca32d3cb0237c578e9758a0a93f1a&split=60&run=true')">
+Tampilkan DartPad 4
+</button>
+
+<iframe id="dart4" 
+style="display:none; width:100%; height:300px;">
+</iframe>
+</div>
